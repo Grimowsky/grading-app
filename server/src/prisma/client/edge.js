@@ -174,7 +174,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Admin\\Documents\\Projects\\backend-learning\\grading-app\\server\\src\\prisma\\client",
+      "value": "/app/src/prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -183,7 +183,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "linux-musl-openssl-3.0.x",
         "native": true
       }
     ],
