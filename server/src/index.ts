@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as http from 'http';
 import { app } from './app';
 import logger from './config/logger';
