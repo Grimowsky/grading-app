@@ -22,6 +22,7 @@ const UserRoutes = (): RouterReturn => {
         asyncWrapper(RequestValidator(UserValidators.updateUserValidator)),
         asyncWrapper(userController.updateUser)
     );
+    router.get('/:id/courses', asyncWrapper(userController.courseEnrollments));
     return router;
 };
 

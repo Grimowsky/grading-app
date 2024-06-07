@@ -1,5 +1,5 @@
 import prismaClient from '../prismaClient';
-import { type User } from '../prisma/client';
+import { type User, type CourseEnrollment } from '../prisma/client';
 import { Service } from 'typedi';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
@@ -87,6 +87,17 @@ export class UserService {
             data: { ...user, social: user?.social ?? {} },
             where: {
                 id,
+            },
+        });
+    };
+
+    getUserCourseEnrollments = async (
+        id: string
+    ): Promise<CourseEnrollment[]> => {
+        return prismaClient.courseEnrollment.findMany({
+            where: { userId: id },
+            include: {
+                course: true,
             },
         });
     };

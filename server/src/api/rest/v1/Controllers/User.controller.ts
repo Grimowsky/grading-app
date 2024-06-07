@@ -50,4 +50,11 @@ export class UserController {
 
         res.status(StatusCodes.OK).send(user);
     };
+
+    courseEnrollments = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+        const courses = await this.user.getUserCourseEnrollments(id);
+
+        res.status(StatusCodes.OK).send({ data: courses });
+    };
 }
