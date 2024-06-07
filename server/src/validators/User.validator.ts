@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { UserRole } from '../prisma/client';
 
 const createUserValidator = z.object({
     body: z.object({
@@ -28,9 +29,16 @@ const updateUserValidator = z.object({
     }),
 });
 
+const enrollmentValidator = z.object({
+    body: z.object({
+        role: z.nativeEnum(UserRole),
+    }),
+});
+
 const UserValidators = {
     createUserValidator,
     updateUserValidator,
+    enrollmentValidator,
 };
 
 export default UserValidators;

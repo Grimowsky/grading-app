@@ -136,4 +136,35 @@ export class UserService {
             },
         });
     };
+
+    deleteUserEnrollment = async (
+        userId: string,
+        courseId: string
+    ): Promise<void> => {
+        const existingEnrollment =
+            await prismaClient.courseEnrollment.findUnique({
+                where: {
+                    userId_courseId: {
+                        userId,
+                        courseId,
+                    },
+                },
+            });
+
+        if (!existingEnrollment) {
+            throw new ExtendedError(
+                `User is not enrolled in this course`,
+                StatusCodes.CONFLICT
+            );
+        }
+
+        await prismaClient.courseEnrollment.delete({
+            where: {
+                userId_courseId: {
+                    userId,
+                    courseId,
+                },
+            },
+        });
+    };
 }

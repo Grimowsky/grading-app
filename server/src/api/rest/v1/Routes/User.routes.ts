@@ -25,7 +25,12 @@ const UserRoutes = (): RouterReturn => {
     router.get('/:id/courses', asyncWrapper(userController.courseEnrollments));
     router.post(
         '/:id/courses/:courseId',
+        asyncWrapper(RequestValidator(UserValidators.enrollmentValidator)),
         asyncWrapper(userController.enrollUserToCourse)
+    );
+    router.delete(
+        '/:id/courses/:courseId',
+        asyncWrapper(userController.deleteUserEnrollment)
     );
     return router;
 };

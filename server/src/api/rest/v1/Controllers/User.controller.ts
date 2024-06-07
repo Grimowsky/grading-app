@@ -67,4 +67,13 @@ export class UserController {
 
         res.status(StatusCodes.CREATED).send({ ok: true });
     };
+
+    deleteUserEnrollment = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+        const courseId = req.params.courseId;
+
+        await this.user.deleteUserEnrollment(id, courseId);
+
+        res.status(StatusCodes.OK).send({ ok: true });
+    };
 }
