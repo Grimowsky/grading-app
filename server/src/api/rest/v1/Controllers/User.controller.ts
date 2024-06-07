@@ -14,6 +14,13 @@ export class UserController {
 
     getUsersList = async (_req: AppReq, res: AppRes): Promise<void> => {
         const users = await this.user.getUserList();
-        res.send({ data: users });
+        res.status(200).send({ data: users });
+    };
+
+    getUserById = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+        const user = await this.user.getUserById(id);
+
+        res.status(200).send(user);
     };
 }

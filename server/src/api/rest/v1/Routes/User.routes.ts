@@ -7,7 +7,7 @@ const UserRoutes = (): RouterReturn => {
     const userController = Container.get(UserController);
 
     router.get('/', userController.getUsersList);
-    router.get('/:id');
+    router.get('/:id', userController.getUserById);
     router.post('/');
     router.put('/:id');
     router.delete('/:id');
