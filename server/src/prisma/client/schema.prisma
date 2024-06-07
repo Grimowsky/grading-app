@@ -1,9 +1,9 @@
 // This is your Prisma schema file,
-  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
-  output = "../src/prisma/client"
+  output   = "../src/prisma/client"
 }
 
 datasource db {
@@ -11,17 +11,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id Int @id @default(autoincrement())
-  email String @unique
-  username String @unique
-  password String
-  roleId Int
-  role role @relation(fields: [roleId], references: [id])
+model User {
+  id          String             @id() @default(uuid())
+  email       String             @unique
+  firstName   String
+  lastName    String
+  social      Json?
+  // relations
+  courses     CourseEnrollment[]
+  testGraded  TestResult[]       @relation(name: "graded")
+  testResults TestResult[]       @relation(name: "results")
+  TestResult  TestResult[]
 }
 
-model role {
-  id Int @id @default(autoincrement())
-  name String @unique
-  users user[]
+model Course {
+  id            String             @id() @default(uuid())
+  name          String
+  courseDetails String?
+  // relations
+  members       CourseEnrollment[]
+  tests         Test[]
+}
+
+model CourseEnrollment {
+  createdAt DateTime @default(now())
+  role      UserRole
+  // relations
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+
+  @@id([userId, courseId])
+  @@index([userId, role])
+}
+
+model Test {
+  id         String       @id() @default(uuid())
+  updatedAt  DateTime     @updatedAt
+  name       String
+  date       DateTime
+  // relations
+  courseId   String?
+  Course     Course?      @relation(fields: [courseId], references: [id])
+  TestResult TestResult[]
+}
+
+model TestResult {
+  id        String   @id() @default(uuid())
+  createdAt DateTime @default(now())
+  result    Int
+
+  graderId  String
+  grader    User    @relation(fields: [graderId], references: [id], name: "graded")
+  studentId String
+  student   User    @relation(fields: [studentId], references: [id], name: "results")
+  testId    String
+  test      Test    @relation(fields: [testId], references: [id])
+  User      User?   @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+enum UserRole {
+  TEACHER
+  STUDENT
 }

@@ -110,14 +110,40 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  username: 'username',
-  password: 'password',
-  roleId: 'roleId'
+  firstName: 'firstName',
+  lastName: 'lastName',
+  social: 'social'
 };
 
-exports.Prisma.RoleScalarFieldEnum = {
+exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  courseDetails: 'courseDetails'
+};
+
+exports.Prisma.CourseEnrollmentScalarFieldEnum = {
+  createdAt: 'createdAt',
+  role: 'role',
+  userId: 'userId',
+  courseId: 'courseId'
+};
+
+exports.Prisma.TestScalarFieldEnum = {
+  id: 'id',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  date: 'date',
+  courseId: 'courseId'
+};
+
+exports.Prisma.TestResultScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  result: 'result',
+  graderId: 'graderId',
+  studentId: 'studentId',
+  testId: 'testId',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
@@ -125,15 +151,37 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.UserRole = exports.$Enums.UserRole = {
+  TEACHER: 'TEACHER',
+  STUDENT: 'STUDENT'
+};
 
 exports.Prisma.ModelName = {
-  user: 'user',
-  role: 'role'
+  User: 'User',
+  Course: 'Course',
+  CourseEnrollment: 'CourseEnrollment',
+  Test: 'Test',
+  TestResult: 'TestResult'
 };
 
 /**
