@@ -17,7 +17,11 @@ const UserRoutes = (): RouterReturn => {
         asyncWrapper(userController.addUser)
     );
     router.delete('/:id', asyncWrapper(userController.deleteUser));
-    router.put('/:id');
+    router.put(
+        '/:id',
+        asyncWrapper(RequestValidator(UserValidators.updateUserValidator)),
+        asyncWrapper(userController.updateUser)
+    );
     return router;
 };
 

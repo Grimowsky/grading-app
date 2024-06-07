@@ -41,4 +41,13 @@ export class UserController {
 
         res.status(StatusCodes.OK).send({ ok: true });
     };
+
+    updateUser = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+        const user = req.body as Partial<User>;
+
+        await this.user.updateUser(id, user);
+
+        res.status(StatusCodes.OK).send(user);
+    };
 }

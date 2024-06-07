@@ -68,4 +68,26 @@ export class UserService {
             prismaClient.user.delete({ where: { id } }),
         ]);
     };
+
+    updateUser = async (id: string, user: Partial<User>): Promise<User> => {
+        const existingUser = await prismaClient.user.findUnique({
+            where: {
+                id,
+            },
+        });
+
+        if (!existingUser) {
+            throw new ExtendedError(
+                'User with given id does not exist',
+                StatusCodes.BAD_REQUEST
+            );
+        }
+
+        return prismaClient.user.update({
+            data: { ...user, social: user?.social ?? {} },
+            where: {
+                id,
+            },
+        });
+    };
 }

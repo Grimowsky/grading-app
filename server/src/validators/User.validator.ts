@@ -14,8 +14,23 @@ const createUserValidator = z.object({
     }),
 });
 
+const updateUserValidator = z.object({
+    body: z.object({
+        email: z.string().email().optional(),
+        firstName: z.string().optional().default(''),
+        lastName: z.string().optional().default(''),
+        social: z
+            .object({
+                twitter: z.string(),
+                facebook: z.string(),
+            })
+            .optional(),
+    }),
+});
+
 const UserValidators = {
     createUserValidator,
+    updateUserValidator,
 };
 
 export default UserValidators;
