@@ -28,4 +28,10 @@ export class UserService {
 
         return user;
     };
+
+    addUser = async (user: User): Promise<void> => {
+        await prismaClient.user.create({
+            data: { ...user, social: user.social ?? {} },
+        });
+    };
 }
