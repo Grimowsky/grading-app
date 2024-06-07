@@ -30,6 +30,19 @@ export class UserService {
     };
 
     addUser = async (user: User): Promise<void> => {
+        const existingUser = await prismaClient.user.findUnique({
+            where: {
+                email: user.email,
+            },
+        });
+
+        if (existingUser) {
+            throw new ExtendedError(
+                `User with given email already exist`,
+                StatusCodes.CONFLICT
+            );
+        }
+
         await prismaClient.user.create({
             data: { ...user, social: user.social ?? {} },
         });
