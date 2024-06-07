@@ -47,4 +47,25 @@ export class UserService {
             data: { ...user, social: user.social ?? {} },
         });
     };
+
+    deleteUser = async (id: string): Promise<void> => {
+        const existingUser = await prismaClient.user.findUnique({
+            where: { id },
+        });
+
+        if (!existingUser) {
+            throw new ExtendedError(
+                'User with given id does not exist',
+                StatusCodes.BAD_REQUEST
+            );
+        }
+
+        // delete user and related data in a transaction
+        await prismaClient.$transaction([
+            prismaClient.testResult.deleteMany({ where: { userId: id } }),
+            prismaClient.testResult.deleteMany({ where: { graderId: id } }),
+            prismaClient.courseEnrollment.deleteMany({ where: { userId: id } }),
+            prismaClient.user.delete({ where: { id } }),
+        ]);
+    };
 }

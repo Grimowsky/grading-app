@@ -33,4 +33,12 @@ export class UserController {
 
         res.status(StatusCodes.CREATED).send(user);
     };
+
+    deleteUser = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+
+        await this.user.deleteUser(id);
+
+        res.status(StatusCodes.OK).send({ ok: true });
+    };
 }

@@ -16,8 +16,8 @@ const UserRoutes = (): RouterReturn => {
         asyncWrapper(RequestValidator(UserValidators.createUserValidator)),
         asyncWrapper(userController.addUser)
     );
+    router.delete('/:id', asyncWrapper(userController.deleteUser));
     router.put('/:id');
-    router.delete('/:id');
     return router;
 };
 
