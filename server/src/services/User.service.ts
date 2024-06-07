@@ -1,5 +1,9 @@
 import prismaClient from '../prismaClient';
-import { type User, type CourseEnrollment } from '../prisma/client';
+import {
+    type User,
+    type CourseEnrollment,
+    type UserRole,
+} from '../prisma/client';
 import { Service } from 'typedi';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
@@ -98,6 +102,37 @@ export class UserService {
             where: { userId: id },
             include: {
                 course: true,
+            },
+        });
+    };
+
+    enrollUserForCourse = async (
+        userId: string,
+        courseId: string,
+        role: UserRole
+    ): Promise<void> => {
+        const existingEnrollment =
+            await prismaClient.courseEnrollment.findUnique({
+                where: {
+                    userId_courseId: {
+                        userId,
+                        courseId,
+                    },
+                },
+            });
+
+        if (existingEnrollment) {
+            throw new ExtendedError(
+                `User is already enrolled in this course`,
+                StatusCodes.CONFLICT
+            );
+        }
+
+        await prismaClient.courseEnrollment.create({
+            data: {
+                courseId,
+                userId,
+                role,
             },
         });
     };

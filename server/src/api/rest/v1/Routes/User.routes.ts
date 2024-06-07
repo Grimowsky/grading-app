@@ -23,6 +23,10 @@ const UserRoutes = (): RouterReturn => {
         asyncWrapper(userController.updateUser)
     );
     router.get('/:id/courses', asyncWrapper(userController.courseEnrollments));
+    router.post(
+        '/:id/courses/:courseId',
+        asyncWrapper(userController.enrollUserToCourse)
+    );
     return router;
 };
 

@@ -4,7 +4,7 @@ import {
     type AppRes,
 } from '../../../../common/types/Request.type';
 import { UserService } from '@services/User.service';
-import { type User } from '../../../../prisma/client';
+import { type User, type UserRole } from '../../../../prisma/client';
 import { StatusCodes } from 'http-status-codes';
 
 @Service()
@@ -56,5 +56,15 @@ export class UserController {
         const courses = await this.user.getUserCourseEnrollments(id);
 
         res.status(StatusCodes.OK).send({ data: courses });
+    };
+
+    enrollUserToCourse = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+        const courseId = req.params.courseId;
+        const { role } = req.body as { role: UserRole };
+
+        await this.user.enrollUserForCourse(id, courseId, role);
+
+        res.status(StatusCodes.CREATED).send({ ok: true });
     };
 }
