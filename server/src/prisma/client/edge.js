@@ -126,7 +126,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/app/src/prisma/client",
+      "value": "C:\\Users\\Admin\\Documents\\Projects\\backend-learning\\grading-app\\server\\src\\prisma\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -135,7 +135,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-musl-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
@@ -143,8 +143,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "5.8.1",
@@ -153,7 +152,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
