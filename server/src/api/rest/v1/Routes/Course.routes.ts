@@ -26,6 +26,11 @@ const CourseRoutes = (): Router => {
         asyncWrapper(validateRequest(CourseValidator.updateCourseSchema)),
         asyncWrapper(courseController.updateCourseById)
     );
+    router.delete(
+        '/:id',
+        asyncWrapper(validateRequest(CourseValidator.courseIdSchema)),
+        asyncWrapper(courseController.deleteCourseById)
+    );
 
     return router;
 };
