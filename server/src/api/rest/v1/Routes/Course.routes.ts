@@ -21,6 +21,11 @@ const CourseRoutes = (): Router => {
         asyncWrapper(validateRequest(CourseValidator.courseIdSchema)),
         asyncWrapper(courseController.getCourseById)
     );
+    router.put(
+        '/:id',
+        asyncWrapper(validateRequest(CourseValidator.updateCourseSchema)),
+        asyncWrapper(courseController.updateCourseById)
+    );
 
     return router;
 };

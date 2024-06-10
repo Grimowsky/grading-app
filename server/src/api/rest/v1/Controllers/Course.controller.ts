@@ -36,4 +36,16 @@ export class CourseController {
 
         res.status(StatusCodes.OK).send({ course });
     };
+
+    updateCourseById = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+        const course = req.body as Course;
+
+        const updatedCourse = await this.courseService.updateCourseById(
+            id,
+            course
+        );
+
+        res.status(StatusCodes.OK).send({ updatedCourse });
+    };
 }

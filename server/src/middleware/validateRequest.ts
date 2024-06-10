@@ -13,6 +13,7 @@ const validateRequestMiddleware =
                 params: req.params,
             });
         } catch (e) {
+            console.log('@@@', e);
             throw ExtendedError.of(
                 'zod request validation error',
                 StatusCodes.BAD_REQUEST

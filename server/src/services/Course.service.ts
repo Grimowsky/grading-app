@@ -35,4 +35,22 @@ export class CourseService {
 
         return course;
     };
+
+    updateCourseById = async (id: string, course: Course): Promise<Course> => {
+        const existingCourse = await this.db.course.findFirst({
+            where: { id },
+        });
+
+        if (!existingCourse) {
+            throw new ExtendedError(
+                `No course with given id ${id} found`,
+                StatusCodes.NOT_FOUND
+            );
+        }
+
+        return this.db.course.update({
+            data: course,
+            where: { id },
+        });
+    };
 }
