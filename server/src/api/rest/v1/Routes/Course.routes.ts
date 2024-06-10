@@ -15,6 +15,8 @@ const CourseRoutes = (): Router => {
         asyncWrapper(courseController.createCourse)
     );
 
+    router.get('/', asyncWrapper(courseController.getCourses));
+
     return router;
 };
 

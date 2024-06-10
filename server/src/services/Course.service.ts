@@ -12,4 +12,8 @@ export class CourseService {
     createCourse = async (course: Course): Promise<Course> => {
         return this.db.course.create({ data: course });
     };
+
+    getCourses = async (): Promise<Course[]> => {
+        return this.db.course.findMany();
+    };
 }

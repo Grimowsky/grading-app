@@ -22,4 +22,10 @@ export class CourseController {
         );
         res.status(StatusCodes.CREATED).send({ ...insertedCourse });
     };
+
+    getCourses = async (_req: AppReq, res: AppRes): Promise<void> => {
+        const courses = await this.courseService.getCourses();
+
+        res.status(StatusCodes.OK).send({ data: courses });
+    };
 }
