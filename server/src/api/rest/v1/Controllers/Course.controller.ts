@@ -28,4 +28,12 @@ export class CourseController {
 
         res.status(StatusCodes.OK).send({ data: courses });
     };
+
+    getCourseById = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.id;
+
+        const course = await this.courseService.getCourseById(id);
+
+        res.status(StatusCodes.OK).send({ course });
+    };
 }

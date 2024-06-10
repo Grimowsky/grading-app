@@ -7,8 +7,15 @@ const courseSchema = z.object({
     }),
 });
 
+const courseIdSchema = z.object({
+    params: z.object({
+        id: z.string(),
+    }),
+});
+
 const CourseValidator = {
     courseSchema,
+    courseIdSchema,
 };
 
 export default CourseValidator;

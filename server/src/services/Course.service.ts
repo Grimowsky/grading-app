@@ -1,6 +1,8 @@
 import { Service } from 'typedi';
 import prismaClient from '../prismaClient';
 import { type Course } from '../prisma/client';
+import { ExtendedError } from '../utils/error/error';
+import { StatusCodes } from 'http-status-codes';
 
 @Service()
 export class CourseService {
@@ -15,5 +17,22 @@ export class CourseService {
 
     getCourses = async (): Promise<Course[]> => {
         return this.db.course.findMany();
+    };
+
+    getCourseById = async (id: string): Promise<Course> => {
+        const course = await this.db.course.findFirst({
+            where: {
+                id,
+            },
+        });
+
+        if (!course) {
+            throw new ExtendedError(
+                `No course with given id ${id} found`,
+                StatusCodes.NOT_FOUND
+            );
+        }
+
+        return course;
     };
 }

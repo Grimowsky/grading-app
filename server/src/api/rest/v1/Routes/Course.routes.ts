@@ -16,6 +16,11 @@ const CourseRoutes = (): Router => {
     );
 
     router.get('/', asyncWrapper(courseController.getCourses));
+    router.get(
+        '/:id',
+        asyncWrapper(validateRequest(CourseValidator.courseIdSchema)),
+        asyncWrapper(courseController.getCourseById)
+    );
 
     return router;
 };
