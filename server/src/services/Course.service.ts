@@ -1,10 +1,14 @@
 import { Service } from 'typedi';
 import prismaClient from '../prismaClient';
-import { type Course, type Test } from '../prisma/client';
+import { type Course, type Test, type TestResult } from '../prisma/client';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
 import { type TestToCreate } from '@controllers/Course.controller';
-import { type CreateUserTestResult } from '../types/Course.types';
+import {
+    type CreateUserTestResult,
+    type UpdateTestResults,
+} from '../types/Course.types';
+import * as test from 'node:test';
 
 @Service()
 export class CourseService {
@@ -148,7 +152,7 @@ export class CourseService {
         };
     };
 
-    getTestsResultsById = async (testId: string) => {
+    getTestsResultsById = async (testId: string): Promise<TestResult[]> => {
         const existingTest = await prismaClient.test.findFirst({
             where: { id: testId },
         });
@@ -165,5 +169,34 @@ export class CourseService {
         });
 
         return results;
+    };
+
+    updateTestResults = async (
+        testResultsId: string,
+        results: UpdateTestResults
+    ): Promise<UpdateTestResults> => {
+        const existingTest = await prismaClient.testResult.findFirst({
+            where: { id: testResultsId },
+        });
+
+        if (!existingTest) {
+            throw new ExtendedError(
+                `Test with given id ${testResultsId} was not found`,
+                StatusCodes.NOT_FOUND
+            );
+        }
+
+        const updatedTest = await prismaClient.testResult.update({
+            where: { id: testResultsId },
+            data: {
+                ...results,
+            },
+        });
+
+        return {
+            graderId: updatedTest.graderId,
+            result: updatedTest.result,
+            studentId: updatedTest.studentId,
+        };
     };
 }
