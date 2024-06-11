@@ -76,4 +76,12 @@ export class UserController {
 
         res.status(StatusCodes.OK).send({ ok: true });
     };
+
+    getUserResults = async (req: AppReq, res: AppRes): Promise<void> => {
+        const id = req.params.userId;
+
+        const results = await this.user.getUserResults(id);
+
+        res.status(StatusCodes.OK).send({ data: results });
+    };
 }

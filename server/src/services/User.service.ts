@@ -3,10 +3,13 @@ import {
     type User,
     type CourseEnrollment,
     type UserRole,
+    type TestResult,
 } from '../prisma/client';
 import { Service } from 'typedi';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
+
+type UserTestResult = Pick<TestResult, 'result' | 'createdAt'>;
 
 @Service()
 export class UserService {
@@ -66,7 +69,7 @@ export class UserService {
 
         // delete user and related data in a transaction
         await prismaClient.$transaction([
-            prismaClient.testResult.deleteMany({ where: { userId: id } }),
+            prismaClient.testResult.deleteMany({ where: { studentId: id } }),
             prismaClient.testResult.deleteMany({ where: { graderId: id } }),
             prismaClient.courseEnrollment.deleteMany({ where: { userId: id } }),
             prismaClient.user.delete({ where: { id } }),
@@ -166,5 +169,35 @@ export class UserService {
                 },
             },
         });
+    };
+
+    getUserResults = async (studentId: string): Promise<UserTestResult[]> => {
+        const results = await prismaClient.testResult.findMany({
+            where: { studentId },
+            select: {
+                result: true,
+                createdAt: true,
+                test: {
+                    select: {
+                        courseId: true,
+                        Course: {
+                            select: {
+                                name: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+
+        if (!results) {
+            return [];
+        }
+
+        return results.map((result) => ({
+            result: result.result,
+            createdAt: result.createdAt,
+            courseName: result.test?.Course?.name || null,
+        }));
     };
 }

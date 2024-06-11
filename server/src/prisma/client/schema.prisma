@@ -21,7 +21,6 @@ model User {
   courses     CourseEnrollment[]
   testGraded  TestResult[]       @relation(name: "graded")
   testResults TestResult[]       @relation(name: "results")
-  TestResult  TestResult[]
 }
 
 model Course {
@@ -52,8 +51,8 @@ model Test {
   name       String
   date       DateTime     @default(now())
   // relations
-  courseId   String?
-  Course     Course?      @relation(fields: [courseId], references: [id])
+  courseId   String
+  Course     Course       @relation(fields: [courseId], references: [id])
   TestResult TestResult[]
 }
 
@@ -63,13 +62,11 @@ model TestResult {
   result    Int
 
   graderId  String
-  grader    User    @relation(fields: [graderId], references: [id], name: "graded")
+  grader    User   @relation(fields: [graderId], references: [id], name: "graded")
   studentId String
-  student   User    @relation(fields: [studentId], references: [id], name: "results")
+  student   User   @relation(fields: [studentId], references: [id], name: "results")
   testId    String
-  test      Test    @relation(fields: [testId], references: [id])
-  User      User?   @relation(fields: [userId], references: [id])
-  userId    String?
+  test      Test   @relation(fields: [testId], references: [id])
 }
 
 enum UserRole {

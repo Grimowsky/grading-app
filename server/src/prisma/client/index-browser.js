@@ -142,8 +142,7 @@ exports.Prisma.TestResultScalarFieldEnum = {
   result: 'result',
   graderId: 'graderId',
   studentId: 'studentId',
-  testId: 'testId',
-  userId: 'userId'
+  testId: 'testId'
 };
 
 exports.Prisma.SortOrder = {

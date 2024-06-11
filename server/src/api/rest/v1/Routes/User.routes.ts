@@ -32,6 +32,14 @@ const UserRoutes = (): RouterReturn => {
         '/:id/courses/:courseId',
         asyncWrapper(userController.deleteUserEnrollment)
     );
+    router.get(
+        '/:userId/test-results',
+        asyncWrapper(
+            RequestValidator(UserValidators.getUsersTestsResultsValidator)
+        ),
+        asyncWrapper(userController.getUserResults)
+    );
+
     return router;
 };
 

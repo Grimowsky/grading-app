@@ -35,10 +35,17 @@ const enrollmentValidator = z.object({
     }),
 });
 
+const getUsersTestsResultsValidator = z.object({
+    params: z.object({
+        userId: z.string(),
+    }),
+});
+
 const UserValidators = {
     createUserValidator,
     updateUserValidator,
     enrollmentValidator,
+    getUsersTestsResultsValidator,
 };
 
 export default UserValidators;
