@@ -3,13 +3,17 @@ import {
     type User,
     type CourseEnrollment,
     type UserRole,
-    type TestResult,
 } from '../prisma/client';
 import { Service } from 'typedi';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
 
-type UserTestResult = Pick<TestResult, 'result' | 'createdAt'>;
+interface UserTestResult {
+    result: number;
+    createdAt: Date;
+    courseName: string | null;
+    courseId: string;
+}
 
 @Service()
 export class UserService {
@@ -183,6 +187,7 @@ export class UserService {
                         Course: {
                             select: {
                                 name: true,
+                                id: true,
                             },
                         },
                     },
@@ -198,6 +203,7 @@ export class UserService {
             result: result.result,
             createdAt: result.createdAt,
             courseName: result.test?.Course?.name || null,
+            courseId: result?.test?.Course?.id,
         }));
     };
 }
