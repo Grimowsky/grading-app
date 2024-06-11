@@ -75,4 +75,19 @@ export class CourseService {
 
         return prismaClient.test.create({ data: { ...testBody, courseId } });
     };
+
+    getTestById = async (testId: string): Promise<Test> => {
+        const existingTest = await prismaClient.test.findFirst({
+            where: { id: testId },
+        });
+
+        if (!existingTest) {
+            throw new ExtendedError(
+                `Test with given id ${testId} was not found`,
+                StatusCodes.NOT_FOUND
+            );
+        }
+
+        return existingTest;
+    };
 }

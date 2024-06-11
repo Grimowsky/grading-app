@@ -32,11 +32,18 @@ const createTestSchema = z.object({
     }),
 });
 
+const getCourseSchema = z.object({
+    params: z.object({
+        testId: z.string(),
+    }),
+});
+
 const CourseValidator = {
     courseSchema,
     courseIdSchema,
     updateCourseSchema,
     createTestSchema,
+    getCourseSchema,
 };
 
 export default CourseValidator;

@@ -67,4 +67,12 @@ export class CourseController {
 
         res.status(StatusCodes.CREATED).send({ ...testToCreate });
     };
+
+    getTestById = async (req: AppReq, res: AppRes): Promise<void> => {
+        const testId = req.params.testId;
+
+        const test = await this.courseService.getTestById(testId);
+
+        res.status(StatusCodes.OK).send({ ...test });
+    };
 }
