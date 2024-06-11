@@ -81,6 +81,12 @@ const updateTestResultsSchema = z.object({
     }),
 });
 
+const deleteTestResultsSchema = z.object({
+    params: z.object({
+        testResultId: z.string(),
+    }),
+});
+
 const CourseValidator = {
     courseSchema,
     courseIdSchema,
@@ -92,6 +98,7 @@ const CourseValidator = {
     createUserTestResultsSchema,
     getTestResultsByIdSchema,
     updateTestResultsSchema,
+    deleteTestResultsSchema,
 };
 
 export default CourseValidator;

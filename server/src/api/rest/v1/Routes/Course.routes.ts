@@ -68,6 +68,11 @@ const CourseRoutes = (): Router => {
         asyncWrapper(validateRequest(CourseValidator.updateTestResultsSchema)),
         asyncWrapper(courseController.updateTestResultsById)
     );
+    router.delete(
+        '/tests/test-results/:testResultId',
+        asyncWrapper(validateRequest(CourseValidator.deleteTestResultsSchema)),
+        asyncWrapper(courseController.deleteTestResultById)
+    );
 
     return router;
 };

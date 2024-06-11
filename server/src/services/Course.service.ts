@@ -8,7 +8,6 @@ import {
     type CreateUserTestResult,
     type UpdateTestResults,
 } from '../types/Course.types';
-import * as test from 'node:test';
 
 @Service()
 export class CourseService {
@@ -198,5 +197,24 @@ export class CourseService {
             result: updatedTest.result,
             studentId: updatedTest.studentId,
         };
+    };
+
+    deleteTestResultById = async (testResultsId: string): Promise<void> => {
+        const existingTest = await prismaClient.testResult.findFirst({
+            where: { id: testResultsId },
+        });
+
+        if (!existingTest) {
+            throw new ExtendedError(
+                `Test with given id ${testResultsId} was not found`,
+                StatusCodes.NOT_FOUND
+            );
+        }
+
+        await prismaClient.$transaction([
+            prismaClient.testResult.deleteMany({
+                where: { id: testResultsId },
+            }),
+        ]);
     };
 }

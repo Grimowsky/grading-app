@@ -129,4 +129,12 @@ export class CourseController {
 
         res.status(StatusCodes.OK).send({ ...updatedTest });
     };
+
+    deleteTestResultById = async (req: AppReq, res: AppRes): Promise<void> => {
+        const testResultsId = req.params.testResultId;
+
+        await this.courseService.deleteTestResultById(testResultsId);
+
+        res.status(StatusCodes.OK).send({ ok: true });
+    };
 }
