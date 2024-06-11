@@ -6848,7 +6848,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
     Course?: CourseCreateNestedOneWithoutTestsInput
     TestResult?: TestResultCreateNestedManyWithoutTestInput
   }
@@ -6857,7 +6857,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
     courseId?: string | null
     TestResult?: TestResultUncheckedCreateNestedManyWithoutTestInput
   }
@@ -6884,7 +6884,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
     courseId?: string | null
   }
 
@@ -8153,7 +8153,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
     TestResult?: TestResultCreateNestedManyWithoutTestInput
   }
 
@@ -8161,7 +8161,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
     TestResult?: TestResultUncheckedCreateNestedManyWithoutTestInput
   }
 
@@ -8468,7 +8468,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
     Course?: CourseCreateNestedOneWithoutTestsInput
   }
 
@@ -8476,7 +8476,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
     courseId?: string | null
   }
 
@@ -8780,7 +8780,7 @@ export namespace Prisma {
     id?: string
     updatedAt?: Date | string
     name: string
-    date: Date | string
+    date?: Date | string
   }
 
   export type CourseEnrollmentUpdateWithoutCourseInput = {

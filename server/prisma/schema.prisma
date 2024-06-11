@@ -50,7 +50,7 @@ model Test {
   id         String       @id() @default(uuid())
   updatedAt  DateTime     @updatedAt
   name       String
-  date       DateTime
+  date       DateTime     @default(now())
   // relations
   courseId   String?
   Course     Course?      @relation(fields: [courseId], references: [id])
