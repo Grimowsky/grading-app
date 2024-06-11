@@ -8,3 +8,10 @@ export type CreateUserTestResult = z.infer<
 export type UpdateTestResults = z.infer<
     typeof CourseValidator.updateTestResultsSchema.shape.body
 >;
+
+export interface TestResultsById {
+    testName: string;
+    result: number;
+    createdAt: Date;
+    grader: { id: string; firstName: string; lastName: string };
+}

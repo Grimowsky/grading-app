@@ -6,6 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import { type TestToCreate } from '@controllers/Course.controller';
 import {
     type CreateUserTestResult,
+    type TestResultsById,
     type UpdateTestResults,
 } from '../types/Course.types';
 
@@ -151,7 +152,9 @@ export class CourseService {
         };
     };
 
-    getTestsResultsById = async (testId: string): Promise<TestResult[]> => {
+    getTestsResultsById = async (
+        testId: string
+    ): Promise<TestResultsById[]> => {
         const existingTest = await prismaClient.test.findFirst({
             where: { id: testId },
         });
@@ -165,9 +168,29 @@ export class CourseService {
 
         const results = await prismaClient.testResult.findMany({
             where: { testId },
+            select: {
+                createdAt: true,
+                result: true,
+                grader: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        id: true,
+                    },
+                },
+                test: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
         });
 
-        return results;
+        return results.map((r) => {
+            const { test, ...rest } = r;
+
+            return { ...rest, testName: test.name };
+        });
     };
 
     updateTestResults = async (
