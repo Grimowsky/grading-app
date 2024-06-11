@@ -4,7 +4,6 @@ import { type Course, type Test } from '../prisma/client';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
 import { type TestToCreate } from '@controllers/Course.controller';
-import { te } from 'date-fns/locale';
 
 @Service()
 export class CourseService {
