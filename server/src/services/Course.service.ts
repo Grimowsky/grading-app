@@ -1,8 +1,9 @@
 import { Service } from 'typedi';
 import prismaClient from '../prismaClient';
-import { type Course } from '../prisma/client';
+import { type Course, type Test } from '../prisma/client';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
+import { type TestToCreate } from '@controllers/Course.controller';
 
 @Service()
 export class CourseService {
@@ -64,5 +65,14 @@ export class CourseService {
                 },
             }),
         ]);
+    };
+
+    createCourseTest = async (
+        courseId: string,
+        testBody: TestToCreate
+    ): Promise<Test> => {
+        await this.checkForCourseExistence(courseId);
+
+        return prismaClient.test.create({ data: { ...testBody, courseId } });
     };
 }

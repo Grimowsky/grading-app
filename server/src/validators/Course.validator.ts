@@ -23,10 +23,20 @@ const updateCourseSchema = z.object({
     }),
 });
 
+const createTestSchema = z.object({
+    params: z.object({
+        id: z.string(),
+    }),
+    body: z.object({
+        name: z.string(),
+    }),
+});
+
 const CourseValidator = {
     courseSchema,
     courseIdSchema,
     updateCourseSchema,
+    createTestSchema,
 };
 
 export default CourseValidator;
