@@ -6,6 +6,7 @@ import {
 } from '../../../../common/types/Request.type';
 import { StatusCodes } from 'http-status-codes';
 import { type Course, type Test } from '../../../../prisma/client';
+import { type CreateUserTestResult } from '../../../../types/Course.types';
 
 export type TestToCreate = Pick<Test, 'name'>;
 
@@ -94,5 +95,15 @@ export class CourseController {
         await this.courseService.deleteTestById(testId);
 
         res.status(StatusCodes.OK).send({ ok: true });
+    };
+
+    createUserTestResult = async (req: AppReq, res: AppRes): Promise<void> => {
+        const testId = req.params.testId;
+        const results = req.body as CreateUserTestResult;
+
+        const createdTestResults =
+            await this.courseService.createUserTestResult(testId, results);
+
+        res.status(StatusCodes.CREATED).send({ ...createdTestResults });
     };
 }

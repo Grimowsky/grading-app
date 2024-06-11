@@ -4,6 +4,7 @@ import { type Course, type Test } from '../prisma/client';
 import { ExtendedError } from '../utils/error/error';
 import { StatusCodes } from 'http-status-codes';
 import { type TestToCreate } from '@controllers/Course.controller';
+import { type CreateUserTestResult } from '../types/Course.types';
 
 @Service()
 export class CourseService {
@@ -125,5 +126,25 @@ export class CourseService {
             prismaClient.testResult.deleteMany({ where: { testId } }),
             prismaClient.test.deleteMany({ where: { id: testId } }),
         ]);
+    };
+
+    createUserTestResult = async (
+        testId: string,
+        results: CreateUserTestResult
+    ): Promise<CreateUserTestResult> => {
+        const cratedResult = await prismaClient.testResult.create({
+            data: {
+                testId,
+                graderId: results.graderId,
+                studentId: results.studentId,
+                result: results.result,
+            },
+        });
+
+        return {
+            graderId: cratedResult.graderId,
+            studentId: cratedResult.studentId,
+            result: cratedResult.result,
+        };
     };
 }
