@@ -64,6 +64,12 @@ const createUserTestResultsSchema = z.object({
     }),
 });
 
+const getTestResultsByIdSchema = z.object({
+    params: z.object({
+        testId: z.string(),
+    }),
+});
+
 const CourseValidator = {
     courseSchema,
     courseIdSchema,
@@ -73,6 +79,7 @@ const CourseValidator = {
     updateTestSchema,
     deleteTestSchema,
     createUserTestResultsSchema,
+    getTestResultsByIdSchema,
 };
 
 export default CourseValidator;

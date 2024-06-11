@@ -58,6 +58,11 @@ const CourseRoutes = (): Router => {
         ),
         asyncWrapper(courseController.createUserTestResult)
     );
+    router.get(
+        '/tests/:testId/test-results',
+        asyncWrapper(validateRequest(CourseValidator.getTestResultsByIdSchema)),
+        asyncWrapper(courseController.getTestResultsById)
+    );
 
     return router;
 };

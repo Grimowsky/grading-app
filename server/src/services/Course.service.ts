@@ -147,4 +147,23 @@ export class CourseService {
             result: cratedResult.result,
         };
     };
+
+    getTestsResultsById = async (testId: string) => {
+        const existingTest = await prismaClient.test.findFirst({
+            where: { id: testId },
+        });
+
+        if (!existingTest) {
+            throw new ExtendedError(
+                `Test with given id ${testId} was not found`,
+                StatusCodes.NOT_FOUND
+            );
+        }
+
+        const results = await prismaClient.testResult.findMany({
+            where: { testId },
+        });
+
+        return results;
+    };
 }
