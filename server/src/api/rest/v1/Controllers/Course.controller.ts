@@ -75,4 +75,16 @@ export class CourseController {
 
         res.status(StatusCodes.OK).send({ ...test });
     };
+
+    updateTestById = async (req: AppReq, res: AppRes): Promise<void> => {
+        const testId = req.params.testId;
+        const test = req.body as TestToCreate;
+
+        const updatedTest = await this.courseService.updateTestById(
+            testId,
+            test
+        );
+
+        res.status(StatusCodes.OK).send({ ...updatedTest });
+    };
 }

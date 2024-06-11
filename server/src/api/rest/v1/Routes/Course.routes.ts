@@ -41,6 +41,11 @@ const CourseRoutes = (): Router => {
         asyncWrapper(validateRequest(CourseValidator.getCourseSchema)),
         asyncWrapper(courseController.getTestById)
     );
+    router.put(
+        '/tests/:testId',
+        asyncWrapper(validateRequest(CourseValidator.updateTestSchema)),
+        asyncWrapper(courseController.updateTestById)
+    );
 
     return router;
 };
