@@ -87,4 +87,12 @@ export class CourseController {
 
         res.status(StatusCodes.OK).send({ ...updatedTest });
     };
+
+    deleteTestById = async (req: AppReq, res: AppRes): Promise<void> => {
+        const testId = req.params.testId;
+
+        await this.courseService.deleteTestById(testId);
+
+        res.status(StatusCodes.OK).send({ ok: true });
+    };
 }

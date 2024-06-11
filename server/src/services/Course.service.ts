@@ -108,4 +108,22 @@ export class CourseService {
 
         return prismaClient.test.update({ data: test, where: { id: testId } });
     };
+
+    deleteTestById = async (testId: string): Promise<void> => {
+        const existingTest = await prismaClient.test.findFirst({
+            where: { id: testId },
+        });
+
+        if (!existingTest) {
+            throw new ExtendedError(
+                `Test with given id ${testId} was not found`,
+                StatusCodes.NOT_FOUND
+            );
+        }
+
+        await prismaClient.$transaction([
+            prismaClient.testResult.deleteMany({ where: { testId } }),
+            prismaClient.test.deleteMany({ where: { id: testId } }),
+        ]);
+    };
 }
